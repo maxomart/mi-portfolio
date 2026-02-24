@@ -1,57 +1,47 @@
-import { EnvVarWarning } from '@/components/env-var-warning'
-import { AuthButton } from '@/components/auth-button'
-import { Hero } from '@/components/hero'
-import { ThemeSwitcher } from '@/components/theme-switcher'
-import { ConnectSupabaseSteps } from '@/components/tutorial/connect-supabase-steps'
-import { SignUpUserSteps } from '@/components/tutorial/sign-up-user-steps'
-import { hasEnvVars } from '@/utils/env'
-import Link from 'next/link'
-import { Suspense } from 'react'
+// app/page.tsx (ejemplo básico con shadcn/ui y Tailwind)
+import { Button } from "@/components/ui/button"; // ajusta según tu starter
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
-  console.log("SUPABASE_URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
-  console.log("SUPABASE_KEY:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "OK" : "MISSING");
   return (
-    
-    <main className="flex min-h-screen flex-col items-center">
-      <div className="flex w-full flex-1 flex-col items-center gap-20">
-        <nav className="border-b-foreground/10 flex h-16 w-full justify-center border-b">
-          <div className="flex w-full max-w-5xl items-center justify-between p-3 px-5 text-sm">
-            <div className="flex items-center gap-5 font-semibold">
-              <Link href={'/'}>Next.js Supabase Starter</Link>
-            </div>
-            {!hasEnvVars ? (
-              <EnvVarWarning />
-            ) : (
-              <Suspense>
-                <AuthButton />
-              </Suspense>
-            )}
-          </div>
-        </nav>
-        <div className="flex max-w-5xl flex-1 flex-col gap-20 p-5">
-          <Hero />
-          <main className="flex flex-1 flex-col gap-6 px-4">
-            <h2 className="mb-4 text-xl font-medium">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-background to-muted px-4">
+      <div className="max-w-4xl text-center space-y-8">
+        {/* Tu foto o avatar */}
+        <div className="mx-auto w-40 h-40 rounded-full overflow-hidden border-4 border-primary">
+          <Image
+            src="/tu-foto.jpg" // subila a /public/tu-foto.jpg
+            alt="Joaquín"
+            width={160}
+            height={160}
+            className="object-cover"
+          />
         </div>
 
-        <footer className="mx-auto flex w-full items-center justify-center gap-8 border-t py-16 text-center text-xs">
-          <p>
-            Powered by{' '}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+          Joaquín
+        </h1>
+        <p className="text-2xl md:text-3xl text-muted-foreground">
+          Full Stack Developer | Buenos Aires, Argentina
+        </p>
+
+        <p className="text-xl max-w-2xl mx-auto">
+          Construyo aplicaciones completas con Next.js, TypeScript, Supabase y AWS. 
+          Apasionado por auth segura, bases de datos relacionales y deploys serverless.
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-4 pt-8">
+          <Button asChild size="lg">
+            <Link href="/projects">Ver Proyectos</Link>
+          </Button>
+          <Button variant="outline" size="lg" asChild>
+            <Link href="/about">Sobre mí</Link>
+          </Button>
+          <Button variant="secondary" size="lg" asChild>
+            <a href="https://github.com/maxomart" target="_blank">GitHub</a>
+          </Button>
+        </div>
       </div>
     </main>
-  )
+  );
 }
