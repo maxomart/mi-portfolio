@@ -4,6 +4,7 @@ import { ThemeProvider } from 'next-themes'
 import NextTopLoader from 'nextjs-toploader'
 import { Analytics } from '@vercel/analytics/react'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import Script from 'next/script'
 import './globals.css'
 import ReactQueryProvider from '@/providers/ReactQueryProvider'
 
@@ -31,7 +32,23 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.className} antialiased`}>
+
+        {/* 🔵 Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-904HGK4JB2"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-904HGK4JB2');
+          `}
+        </Script>
+
         <NextTopLoader showSpinner={false} height={2} color="#2acf80" />
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -44,6 +61,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <ReactQueryDevtools initialIsOpen={false} />
           </ReactQueryProvider>
         </ThemeProvider>
+
       </body>
     </html>
   )
